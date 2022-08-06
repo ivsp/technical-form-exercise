@@ -1,0 +1,11 @@
+
+$primary: #333333 !default;
+$secondary: #FFFFFF !default;
+
+$theme-colors: (
+
+        "primary":          $primary,
+        "secondary":        $secondary,
+);
+
+@import "~bootstrap/scss/bootstrap";
