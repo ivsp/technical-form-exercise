@@ -11,7 +11,6 @@ function RegisterForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.birthDate.value);
     //Validar los errores
     const body = new FormData(e.target);
     body.set("birthDate", new Date(e.target.birthDate.value).getTime());
