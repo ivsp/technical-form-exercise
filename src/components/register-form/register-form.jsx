@@ -3,23 +3,41 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Spinner from "react-bootstrap/Spinner";
 import React, { useState } from "react";
+import { registerNewUser } from "../../functions/api.functions";
 
 function RegisterForm() {
   const [manOption, setManOption] = useState("gender-option");
   const [femaleOption, setFemaleOption] = useState("gender-option");
 
+  const [loading, setLoading] = useState(false);
+
+  async function registerUser(body) {
+    setLoading(true);
+    const r = await registerNewUser(body);
+    if (r.ok) {
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     //Validar los errores
     const body = new FormData(e.target);
-    body.set("birthDate", new Date(e.target.birthDate.value).getTime());
-    /*
+    body.set("birthdate", new Date(e.target.birthdate.value).getTime());
+
     //NOTA: la fecha se manda como un string, en el back tengo que pasarla a number para guardarla en la base de datos
     for (const value of body.values()) {
       console.log(value);
     }
-    */
+    for (const key of body.keys()) {
+      console.log(key);
+    }
+
+    registerUser(body);
   };
 
   const changeManCSSClass = (e) => {
@@ -122,7 +140,7 @@ function RegisterForm() {
               >
                 <Form.Group className="mb-3" controlId="date">
                   <Form.Label>Fecha nacimiento</Form.Label>
-                  <Form.Control name="birthDate" type="date" required />
+                  <Form.Control name="birthdate" type="date" required />
                 </Form.Group>
               </Col>
             </Row>
@@ -213,15 +231,27 @@ function RegisterForm() {
                 xl={{ span: 11, offset: 0 }}
                 xxl={{ span: 10, offset: 0 }}
               >
-                <Button
-                  variant="primary"
-                  type="submit"
-                  style={{
-                    width: "100%",
-                  }}
-                >
-                  REGISTRO
-                </Button>
+                {!loading ? (
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    style={{
+                      width: "100%",
+                    }}
+                  >
+                    REGISTRO
+                  </Button>
+                ) : (
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    style={{
+                      width: "100%",
+                    }}
+                  >
+                    <Spinner animation="border" variant="light" color="white" />
+                  </Button>
+                )}
               </Col>
             </Row>
           </Form>
