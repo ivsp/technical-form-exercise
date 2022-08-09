@@ -1,263 +1,323 @@
 import "./register-form.scss";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Spinner from "react-bootstrap/Spinner";
 import React, { useState } from "react";
-import { registerNewUser } from "../../functions/api.functions";
+import RegisterButton from "../register-button/register-button";
 
-function RegisterForm() {
+function RegisterForm({
+  loading,
+  createdUser,
+  conflict,
+  values,
+  errors,
+  touched,
+  handleSubmit,
+  handleChange,
+  handleBlur,
+}) {
   const [manOption, setManOption] = useState("gender-option");
-  const [femaleOption, setFemaleOption] = useState("gender-option");
-
-  const [loading, setLoading] = useState(false);
-
-  async function registerUser(body) {
-    setLoading(true);
-    const r = await registerNewUser(body);
-    if (r.ok) {
-      setLoading(false);
-    } else {
-      setLoading(false);
-    }
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    //Validar los errores
-    const body = new FormData(e.target);
-    body.set("birthdate", new Date(e.target.birthdate.value).getTime());
-
-    //NOTA: la fecha se manda como un string, en el back tengo que pasarla a number para guardarla en la base de datos
-    for (const value of body.values()) {
-      console.log(value);
-    }
-    for (const key of body.keys()) {
-      console.log(key);
-    }
-
-    registerUser(body);
-  };
+  const [womanOption, setWomanOption] = useState("gender-option");
+  const [otherOption, setOtherOption] = useState("gender-option");
 
   const changeManCSSClass = (e) => {
     e.stopPropagation();
     setManOption("gender-option-select");
-    setFemaleOption("gender-option");
+    setWomanOption("gender-option");
+    setOtherOption("gender-option");
   };
-  const changeFemaleCSSClass = (e) => {
+  const changeWomanCSSClass = (e) => {
     e.stopPropagation();
     setManOption("gender-option");
-    setFemaleOption("gender-option-select");
+    setWomanOption("gender-option-select");
+    setOtherOption("gender-option");
   };
+
+  const changeOtherCSSClass = (e) => {
+    e.stopPropagation();
+    setManOption("gender-option");
+    setWomanOption("gender-option");
+    setOtherOption("gender-option-select");
+  };
+
   return (
-    <React.Fragment>
-      <h1>FORMULARIO</h1>
+    <Form onSubmit={handleSubmit}>
       <Row>
         <Col
-          xs={{ span: 10, offset: 1 }}
-          sm={{ span: 10, offset: 1 }}
-          md={{ span: 8, offset: 2 }}
-          lg={{ span: 4, offset: 1 }}
-          xl={{ span: 5, offset: 1 }}
-          xxl={{ span: 5, offset: 1 }}
-        >
-          AQUI IRÁ INFORMACIÓN, IMAGENES, ALGO DE TEXTO...
-        </Col>
-        <Col
-          xs={{ span: 10, offset: 1 }}
-          sm={{ span: 10, offset: 1 }}
-          md={{ span: 8, offset: 2 }}
-          lg={{ span: 5, offset: 1 }}
+          xs={{ span: 12, offset: 0 }}
+          sm={{ span: 12, offset: 0 }}
+          md={{ span: 12, offset: 0 }}
+          lg={{ span: 4, soffset: 0 }}
           xl={{ span: 5, offset: 0 }}
           xxl={{ span: 5, offset: 0 }}
         >
-          <Form onSubmit={handleSubmit}>
-            <Row>
-              <Col
-                xs={{ span: 12, offset: 0 }}
-                sm={{ span: 12, offset: 0 }}
-                md={{ span: 12, offset: 0 }}
-                lg={{ span: 4, soffset: 0 }}
-                xl={{ span: 5, offset: 0 }}
-                xxl={{ span: 5, offset: 0 }}
+          <Form.Group className="mb-3" controlId="name">
+            <Form.Label>Nombre</Form.Label>
+            <Form.Control
+              name="name"
+              type="text"
+              value={values.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="nombre"
+            />
+            {touched.name && errors.name && (
+              <div
+                className="small"
+                style={{
+                  color: " rgb(241, 53, 53)",
+                }}
               >
-                <Form.Group className="mb-3" controlId="name">
-                  <Form.Label>Nombre</Form.Label>
-                  <Form.Control
-                    name="name"
-                    type="text"
-                    placeholder="nombre"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col
-                xs={{ span: 12, offset: 0 }}
-                sm={{ span: 12, offset: 0 }}
-                md={{ span: 12, offset: 0 }}
-                lg={{ span: 8, soffset: 0 }}
-                xl={{ span: 6, offset: 0 }}
-                xxl={{ span: 5, offset: 0 }}
+                {errors.name}
+              </div>
+            )}
+          </Form.Group>
+        </Col>
+        <Col
+          xs={{ span: 12, offset: 0 }}
+          sm={{ span: 12, offset: 0 }}
+          md={{ span: 12, offset: 0 }}
+          lg={{ span: 8, soffset: 0 }}
+          xl={{ span: 6, offset: 0 }}
+          xxl={{ span: 5, offset: 0 }}
+        >
+          <Form.Group className="mb-3" controlId="surname">
+            <Form.Label>Apellidos</Form.Label>
+            <Form.Control
+              name="surname"
+              type="text"
+              value={values.surname}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="apellidos"
+            />
+            {touched.surname && errors.surname && (
+              <div
+                className="small"
+                style={{
+                  color: " rgb(241, 53, 53)",
+                }}
               >
-                <Form.Group className="mb-3" controlId="surname">
-                  <Form.Label>Apellidos</Form.Label>
-                  <Form.Control
-                    name="surname"
-                    type="text"
-                    placeholder="apellidos"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col
-                xs={{ span: 12, offset: 0 }}
-                sm={{ span: 12, offset: 0 }}
-                md={{ span: 12, offset: 0 }}
-                lg={{ span: 12, offset: 0 }}
-                xl={{ span: 6, offset: 0 }}
-                xxl={{ span: 6, offset: 0 }}
-              >
-                <Form.Group className="mb-3" controlId="email">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    name="email"
-                    type="email"
-                    placeholder="Email"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col
-                xs={{ span: 6, offset: 0 }}
-                sm={{ span: 5, offset: 0 }}
-                md={{ span: 4, offset: 0 }}
-                lg={{ span: 5, offset: 0 }}
-                xl={{ span: 4, offset: 1 }}
-                xxl={{ span: 4, offset: 0 }}
-              >
-                <Form.Group className="mb-3" controlId="date">
-                  <Form.Label>Fecha nacimiento</Form.Label>
-                  <Form.Control name="birthdate" type="date" required />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Form.Group controlId="checkbox">
-                <Row>
-                  <Col
-                    xs={{ span: 6, offset: 0 }}
-                    sm={{ span: 5, offset: 1 }}
-                    md={{ span: 4, offset: 2 }}
-                    lg={{ span: 4, offset: 2 }}
-                    xl={{ span: 5, offset: 1 }}
-                    xxl={{ span: 4, offset: 1 }}
-                  >
-                    <Form.Check
-                      id="male-option"
-                      name="gender"
-                      type="radio"
-                      value="man"
-                      style={{
-                        display: "none",
-                      }}
-                    ></Form.Check>
-                    <Form.Label
-                      onClick={changeManCSSClass}
-                      for="male-option"
-                      className={manOption}
-                    >
-                      Hombre
-                    </Form.Label>
-                  </Col>
-                  <Col
-                    xs={{ span: 5, offset: 0 }}
-                    sm={{ span: 5, offset: 0 }}
-                    md={{ span: 4, offset: 0 }}
-                    lg={{ span: 4, offset: 0 }}
-                    xl={{ span: 4, offset: 0 }}
-                    xxl={{ span: 3, offset: 0 }}
-                    style={{
-                      padding: "0px",
-                    }}
-                  >
-                    <Form.Check
-                      id="female-option"
-                      name="gender"
-                      type="radio"
-                      value="female"
-                      style={{
-                        display: "none",
-                      }}
-                    ></Form.Check>
-                    <Form.Label
-                      onClick={changeFemaleCSSClass}
-                      for="female-option"
-                      className={femaleOption}
-                    >
-                      Mujer
-                    </Form.Label>
-                  </Col>
-                </Row>
-              </Form.Group>
-            </Row>
-            <Row>
-              <Col
-                xs={{ span: 12, offset: 0 }}
-                sm={{ span: 12, offset: 0 }}
-                md={{ span: 12, offset: 0 }}
-                lg={{ span: 12, offset: 0 }}
-                xl={{ span: 12, offset: 0 }}
-                xxl={{ span: 12, offset: 0 }}
-              >
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                  <Form.Check
-                    className="small"
-                    type="checkbox"
-                    label="He leído y acepto los términos y condiciones y la Política de privacidad."
-                    required
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col
-                xs={{ span: 12, offset: 0 }}
-                sm={{ span: 12, offset: 0 }}
-                md={{ span: 12, offset: 0 }}
-                lg={{ span: 12, offset: 0 }}
-                xl={{ span: 11, offset: 0 }}
-                xxl={{ span: 10, offset: 0 }}
-              >
-                {!loading ? (
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    style={{
-                      width: "100%",
-                    }}
-                  >
-                    REGISTRO
-                  </Button>
-                ) : (
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    style={{
-                      width: "100%",
-                    }}
-                  >
-                    <Spinner animation="border" variant="light" color="white" />
-                  </Button>
-                )}
-              </Col>
-            </Row>
-          </Form>
+                {errors.surname}
+              </div>
+            )}
+          </Form.Group>
         </Col>
       </Row>
-    </React.Fragment>
+      <Row>
+        <Col
+          xs={{ span: 12, offset: 0 }}
+          sm={{ span: 12, offset: 0 }}
+          md={{ span: 12, offset: 0 }}
+          lg={{ span: 12, offset: 0 }}
+          xl={{ span: 11, offset: 0 }}
+          xxl={{ span: 11, offset: 0 }}
+        >
+          <Form.Group className="mb-3" controlId="email">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              name="email"
+              type="email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="Email"
+            />
+            {touched.email && errors.email && (
+              <div
+                className="small"
+                style={{
+                  color: " rgb(241, 53, 53)",
+                }}
+              >
+                {errors.email}
+              </div>
+            )}
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
+        <Col
+          xs={{ span: 12, offset: 0 }}
+          sm={{ span: 6, offset: 0 }}
+          md={{ span: 6, offset: 0 }}
+          lg={{ span: 6, offset: 0 }}
+          xl={{ span: 5, offset: 0 }}
+          xxl={{ span: 5, offset: 0 }}
+        >
+          <Form.Group className="mb-3" controlId="password">
+            <Form.Label>Contraseña</Form.Label>
+            <Form.Control
+              name="password"
+              type="password"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="contraseña"
+            />
+            {touched.password && errors.password && (
+              <div
+                className="small"
+                style={{
+                  color: " rgb(241, 53, 53)",
+                }}
+              >
+                {errors.password}
+              </div>
+            )}
+          </Form.Group>
+        </Col>
+        <Col
+          xs={{ span: 12, offset: 0 }}
+          sm={{ span: 6, offset: 0 }}
+          md={{ span: 6, offset: 0 }}
+          lg={{ span: 6, offset: 0 }}
+          xl={{ span: 5, offset: 1 }}
+          xxl={{ span: 5, offset: 0 }}
+        >
+          <Form.Group className="mb-3" controlId="repeatpassword">
+            <Form.Label>Repita la contraseña</Form.Label>
+            <Form.Control
+              name="repeatpassword"
+              type="password"
+              value={values.repeatpassword}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="contraseña"
+            />
+            {touched.repeatpassword && errors.repeatpassword && (
+              <div
+                className="small"
+                style={{
+                  color: " rgb(241, 53, 53)",
+                }}
+              >
+                {errors.repeatpassword}
+              </div>
+            )}
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
+        <Form.Group controlId="checkbox">
+          <Row>
+            <Col>
+              <Form.Label>Indique su género:</Form.Label>
+            </Col>
+            <Col
+              xs={{ span: 12, offset: 0 }}
+              sm={{ span: 12, offset: 0 }}
+              md={{ span: 12, offset: 0 }}
+              lg={{ span: 12, offset: 0 }}
+              xl={{ span: 11, offset: 0 }}
+              xxl={{ span: 11, offset: 0 }}
+              className="d-flex gap-3"
+            >
+              <Form.Check
+                id="male-option"
+                name="gender"
+                type="radio"
+                value="man"
+                onChange={handleChange}
+                style={{
+                  display: "none",
+                }}
+              ></Form.Check>
+              <Form.Label
+                onClick={changeManCSSClass}
+                for="male-option"
+                className={manOption}
+              >
+                Hombre
+              </Form.Label>
+              <Form.Check
+                id="female-option"
+                name="gender"
+                type="radio"
+                value="woman"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                style={{
+                  display: "none",
+                }}
+              ></Form.Check>
+              <Form.Label
+                onClick={changeWomanCSSClass}
+                for="female-option"
+                className={womanOption}
+              >
+                Mujer
+              </Form.Label>
+              <Form.Check
+                id="other-option"
+                name="gender"
+                type="radio"
+                value="other"
+                onChange={handleChange}
+                style={{
+                  display: "none",
+                }}
+              ></Form.Check>
+              <Form.Label
+                onClick={changeOtherCSSClass}
+                for="other-option"
+                className={otherOption}
+              >
+                Otro
+              </Form.Label>
+            </Col>
+
+            {touched.gender && errors.gender && (
+              <Col
+                className="d-inline-block small"
+                style={{
+                  color: " rgb(241, 53, 53)",
+                }}
+              >
+                {errors.gender}
+              </Col>
+            )}
+          </Row>
+        </Form.Group>
+      </Row>
+      <Row>
+        <Col
+          xs={{ span: 12, offset: 0 }}
+          sm={{ span: 12, offset: 0 }}
+          md={{ span: 12, offset: 0 }}
+          lg={{ span: 12, offset: 0 }}
+          xl={{ span: 12, offset: 0 }}
+          xxl={{ span: 12, offset: 0 }}
+        >
+          <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Check
+              className="small"
+              type="checkbox"
+              name="policy"
+              value={values.policy}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              label="He leído y acepto los términos y condiciones y la Política de privacidad."
+            />
+            {touched.policy && errors.policy && (
+              <div
+                className="small"
+                style={{
+                  color: " rgb(241, 53, 53)",
+                }}
+              >
+                {errors.policy}
+              </div>
+            )}
+          </Form.Group>
+        </Col>
+      </Row>
+      <RegisterButton
+        loading={loading}
+        createdUser={createdUser}
+        conflict={conflict}
+      ></RegisterButton>
+    </Form>
   );
 }
 
