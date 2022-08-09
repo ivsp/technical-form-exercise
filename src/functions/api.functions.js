@@ -14,18 +14,17 @@ export async function registerNewUser(body) {
   }
 }
 
-export async function deleteDBUser(email, setIsDeleted) {
+export async function deleteDBUser(email) {
+  //console.log(email);
   try {
     const r = await fetch(`http://localhost:5000/users/delete`, {
       method: "DELETE",
-      body: JSON.stringify(email),
+      body: JSON.stringify({ email }),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    const data = await r.json();
-    if (data) setIsDeleted(true);
-    return data;
+    return r;
   } catch (err) {
     console.log(err);
     return err;

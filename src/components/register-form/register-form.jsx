@@ -47,7 +47,7 @@ function RegisterForm({
           xs={{ span: 12, offset: 0 }}
           sm={{ span: 12, offset: 0 }}
           md={{ span: 12, offset: 0 }}
-          lg={{ span: 4, soffset: 0 }}
+          lg={{ span: 4, offset: 0 }}
           xl={{ span: 5, offset: 0 }}
           xxl={{ span: 5, offset: 0 }}
         >
@@ -77,7 +77,7 @@ function RegisterForm({
           xs={{ span: 12, offset: 0 }}
           sm={{ span: 12, offset: 0 }}
           md={{ span: 12, offset: 0 }}
-          lg={{ span: 8, soffset: 0 }}
+          lg={{ span: 8, offset: 0 }}
           xl={{ span: 6, offset: 0 }}
           xxl={{ span: 5, offset: 0 }}
         >
