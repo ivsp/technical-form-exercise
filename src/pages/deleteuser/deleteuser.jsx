@@ -1,3 +1,4 @@
+import "./deleteuser.scss";
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
@@ -24,6 +25,7 @@ function DeleteUser() {
   }, []);
 
   async function deleteUser() {
+    setLoading(true);
     setIsDeleted(false);
     setIsError(false);
     const r = await deleteDBUser(params.get("email"));
@@ -58,7 +60,7 @@ function DeleteUser() {
           xl={{ span: 6, offset: 3 }}
           xxl={{ span: 6, offset: 3 }}
         >
-          <h5 className="text-lg-center">
+          <h5 className="text-lg-center text-white">
             A continuación vas a borrar tu cuenta. Para confirmar, pulsa el
             siguiente botón.
           </h5>
@@ -75,21 +77,17 @@ function DeleteUser() {
         >
           {!loading ? (
             <Button
+              className="delete-button-style text-warning"
               onClick={handleDelete}
-              variant="primary"
-              style={{
-                width: "100%",
-              }}
+              variant="dark"
             >
               Borrar usuario
             </Button>
           ) : (
             <Button
+              className="delete-button-style"
               onClick={handleDelete}
-              variant="primary"
-              style={{
-                width: "100%",
-              }}
+              variant="dark"
             >
               <Spinner animation="border" variant="warning" size="sm" />
               {/* Arreglar para ver si puedo poner el spiner rojo. Ajustar textos y hacerlo responsive. */}
@@ -107,7 +105,7 @@ function DeleteUser() {
             xl={{ span: 6, offset: 3 }}
             xxl={{ span: 6, offset: 3 }}
           >
-            <h5>
+            <h5 className="text-white opacity-75">
               No se ha encontrado ningun usuario en el sistema con el siguiente
               correo electrónico: {params.get("email")}
             </h5>
@@ -124,7 +122,7 @@ function DeleteUser() {
             xl={{ span: 6, offset: 3 }}
             xxl={{ span: 6, offset: 3 }}
           >
-            <h5>
+            <h5 className="text-white opacity-75">
               El usuario con los siguientes datos ha sido dado de baja en el
               sistema:
             </h5>
@@ -137,7 +135,7 @@ function DeleteUser() {
             xl={{ span: 6, offset: 3 }}
             xxl={{ span: 6, offset: 3 }}
           >
-            <ul>
+            <ul className="text-white opacity-75">
               <li>Nombre: {userData?.name}</li>
               <li>Apellidos: {userData?.surname}</li>
               <li>Email: {userData?.email}</li>

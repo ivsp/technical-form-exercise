@@ -1,21 +1,38 @@
 
 $primary: #333333 !default;
 $secondary: #FFFFFF !default;
+$warning: #d26060 !default;
+$success: #61c955 !default;
 
 $theme-colors: (
 
         "primary":          $primary,
         "secondary":        $secondary,
+        "warning":          $warning,
+        "success":          $success,
+
 );
 
 //reset inputs
-input:focus, select:focus, select, input.form-control:focus {
+input:focus, input.form-control:focus {
     outline:none !important;
     outline-width: 0 !important;
+    background-color: unset;
+    color: #FFFFFF;
     box-shadow: none;
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
-   
 }
+
+input {
+&:valid{
+    color: #FFFFFF;  
+}
+&:invalid{
+    color: #FFFFFF; 
+}
+}
+
+
 
 @import "~bootstrap/scss/bootstrap";

@@ -41,7 +41,7 @@ function RegisterForm({
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} autoComplete="nope">
       <Row>
         <Col
           xs={{ span: 12, offset: 0 }}
@@ -52,14 +52,16 @@ function RegisterForm({
           xxl={{ span: 5, offset: 0 }}
         >
           <Form.Group className="mb-3" controlId="name">
-            <Form.Label>Nombre</Form.Label>
+            <Form.Label className="labels-styles">Nombre:</Form.Label>
             <Form.Control
               name="name"
               type="text"
+              className="inputs-style"
               value={values.name}
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder="nombre"
+              autocomplete="none"
             />
             {touched.name && errors.name && (
               <div
@@ -82,14 +84,16 @@ function RegisterForm({
           xxl={{ span: 5, offset: 0 }}
         >
           <Form.Group className="mb-3" controlId="surname">
-            <Form.Label>Apellidos</Form.Label>
+            <Form.Label className="labels-styles">Apellidos:</Form.Label>
             <Form.Control
               name="surname"
               type="text"
+              className="inputs-style"
               value={values.surname}
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder="apellidos"
+              autocomplete="none"
             />
             {touched.surname && errors.surname && (
               <div
@@ -111,17 +115,19 @@ function RegisterForm({
           md={{ span: 12, offset: 0 }}
           lg={{ span: 12, offset: 0 }}
           xl={{ span: 11, offset: 0 }}
-          xxl={{ span: 11, offset: 0 }}
+          xxl={{ span: 10, offset: 0 }}
         >
           <Form.Group className="mb-3" controlId="email">
-            <Form.Label>Email</Form.Label>
+            <Form.Label className="labels-styles">Email:</Form.Label>
             <Form.Control
               name="email"
               type="email"
+              className="inputs-style"
               value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder="Email"
+              autocomplete="none"
             />
             {touched.email && errors.email && (
               <div
@@ -134,6 +140,19 @@ function RegisterForm({
               </div>
             )}
           </Form.Group>
+          <Form.Control
+            name="email"
+            type="email"
+            className="inputs-style"
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            placeholder="Email"
+            autocomplete="off"
+            style={{
+              display: " none",
+            }}
+          />
         </Col>
       </Row>
       <Row>
@@ -146,14 +165,16 @@ function RegisterForm({
           xxl={{ span: 5, offset: 0 }}
         >
           <Form.Group className="mb-3" controlId="password">
-            <Form.Label>Contraseña</Form.Label>
+            <Form.Label className="labels-styles">Contraseña:</Form.Label>
             <Form.Control
               name="password"
               type="password"
+              className="inputs-style"
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder="contraseña"
+              autocomplete="off"
             />
             {touched.password && errors.password && (
               <div
@@ -176,14 +197,18 @@ function RegisterForm({
           xxl={{ span: 5, offset: 0 }}
         >
           <Form.Group className="mb-3" controlId="repeatpassword">
-            <Form.Label>Repita la contraseña</Form.Label>
+            <Form.Label className="labels-styles">
+              Repita la contraseña:
+            </Form.Label>
             <Form.Control
               name="repeatpassword"
               type="password"
+              className="inputs-style"
               value={values.repeatpassword}
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder="contraseña"
+              autocomplete="nope"
             />
             {touched.repeatpassword && errors.repeatpassword && (
               <div
@@ -201,9 +226,6 @@ function RegisterForm({
       <Row>
         <Form.Group controlId="checkbox">
           <Row>
-            <Col>
-              <Form.Label>Indique su género:</Form.Label>
-            </Col>
             <Col
               xs={{ span: 12, offset: 0 }}
               sm={{ span: 12, offset: 0 }}
@@ -211,6 +233,18 @@ function RegisterForm({
               lg={{ span: 12, offset: 0 }}
               xl={{ span: 11, offset: 0 }}
               xxl={{ span: 11, offset: 0 }}
+            >
+              <Form.Label className="labels-styles">
+                Indique su género:
+              </Form.Label>
+            </Col>
+            <Col
+              xs={{ span: 12, offset: 0 }}
+              sm={{ span: 12, offset: 0 }}
+              md={{ span: 12, offset: 0 }}
+              lg={{ span: 12, offset: 0 }}
+              xl={{ span: 11, offset: 0 }}
+              xxl={{ span: 10, offset: 0 }}
               className="d-flex gap-3"
             >
               <Form.Check
@@ -291,7 +325,7 @@ function RegisterForm({
         >
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
             <Form.Check
-              className="small"
+              className="small labels-styles"
               type="checkbox"
               name="policy"
               value={values.policy}

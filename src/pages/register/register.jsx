@@ -53,9 +53,9 @@ function Register() {
 
   return (
     <React.Fragment>
-      <h1>FORMULARIO</h1>
-      <Row>
+      <Row className="pt-5 ">
         <Col
+          className="pb-3"
           xs={{ span: 10, offset: 1 }}
           sm={{ span: 10, offset: 1 }}
           md={{ span: 8, offset: 2 }}
@@ -63,9 +63,13 @@ function Register() {
           xl={{ span: 5, offset: 1 }}
           xxl={{ span: 5, offset: 1 }}
         >
-          AQUI IRÁ INFORMACIÓN, IMAGENES, ALGO DE TEXTO...
+          <h4 className="titles-styles">BIENVENIDO</h4>
+          <h6 className="titles-styles">
+            REGÍSTRATE PARA QUE PUEDAS SACAR EL MÁXIMO PARTIDO.
+          </h6>
         </Col>
         <Col
+          className="pt-lg-5 mt-lg-5"
           xs={{ span: 10, offset: 1 }}
           sm={{ span: 10, offset: 1 }}
           md={{ span: 8, offset: 2 }}
