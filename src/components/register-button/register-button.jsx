@@ -32,7 +32,7 @@ function RegisterButton({ loading, createdUser, conflict }) {
               width: "100%",
             }}
           >
-            <Spinner animation="border" variant="light" color="white" />
+            <Spinner animation="border" variant="light" size="sm" />
           </Button>
         )}
         {createdUser && (

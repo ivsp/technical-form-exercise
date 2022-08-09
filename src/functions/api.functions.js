@@ -13,3 +13,20 @@ export async function registerNewUser(body) {
     return err;
   }
 }
+
+export async function deleteDBUser(email) {
+  //console.log(email);
+  try {
+    const r = await fetch(`http://localhost:5000/users/delete`, {
+      method: "DELETE",
+      body: JSON.stringify({ email }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return r;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+}
