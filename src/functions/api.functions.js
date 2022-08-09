@@ -1,6 +1,6 @@
 export async function registerNewUser(body) {
   try {
-    console.log(body);
+    //console.log(body);
     const r = await fetch(`http://localhost:5000/users/register`, {
       method: "POST",
       body: new URLSearchParams(body),

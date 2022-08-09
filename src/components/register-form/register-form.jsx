@@ -7,6 +7,8 @@ import RegisterButton from "../register-button/register-button";
 
 function RegisterForm({
   loading,
+  createdUser,
+  conflict,
   values,
   errors,
   touched,
@@ -310,7 +312,11 @@ function RegisterForm({
           </Form.Group>
         </Col>
       </Row>
-      <RegisterButton loading={loading}></RegisterButton>
+      <RegisterButton
+        loading={loading}
+        createdUser={createdUser}
+        conflict={conflict}
+      ></RegisterButton>
     </Form>
   );
 }
